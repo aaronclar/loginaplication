@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 FROM node:22-bookworm
 
 # Instalar PostgreSQL y dependencias necesarias
@@ -34,17 +33,3 @@ EXPOSE 3000 5432
 
 # CMD
 CMD ["bash", "-c", "gosu postgres bash -c 'initdb -D /var/lib/postgresql/data && pg_ctl -D /var/lib/postgresql/data -o \"-k /run/postgresql\" -w start && psql --command \"CREATE DATABASE ${POSTGRES_DB};\" && node index.js'"]
-=======
-# Base image
-FROM node:22-alpine
-
-WORKDIR /usr/src/app
-
-COPY . ./
-
-EXPOSE 3000
-
-RUN rm -rf node_modules && npm install
-
-CMD ["npm", "start"]
->>>>>>> 0a6f872c7cc6ea8cd229b605e0b9234ac94c7d59
