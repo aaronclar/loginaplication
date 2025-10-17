@@ -32,10 +32,10 @@ function isUser(req, res, next) {
   return res.redirect('/');
 }
 
-function isAuth(req, res, next) {
-  if (req.cookies.user) return next();
-  return res.redirect('/');
-}
+// function isAuth(req, res, next) {
+//   if (req.cookies.user) return next();
+//   return res.redirect('/');
+// }
 
 app.get('/', (req, res) => res.render('login'));
 app.get('/home', isUser, (req, res) =>
