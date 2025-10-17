@@ -1,3 +1,8 @@
 Este proyecto es una aplicación web básica hecha con Node.js, Express, SQLite y EJS que sirve para practicar cómo funciona un sistema de login. Permite que los usuarios se registren en la base de datos con su nombre, contraseña encriptada con bcrypt y un rol que puede ser de administrador o de usuario normal. Al iniciar sesión, el sistema guarda cookies para recordar la autenticación y, según el rol, redirige a /admin o a /home. También tiene la opción de cerrar sesión con /logout.
 
+<<<<<<< HEAD
 Para usarlo se deben instalar las dependencias, crear la base de datos database.sqlite con una tabla de usuarios e insertar cuentas de prueba. Luego se inicia el servidor con node index.js y se accede desde el navegador en http://localhost:3000. Es un proyecto sencillo pero útil para entender la autenticación, el cifrado de contraseñas y el manejo de roles en aplicaciones con Node.js.
+=======
+Para usarlo se deben instalar las dependencias, crear la base de datos database.sqlite con una tabla de usuarios e insertar cuentas de prueba. Luego se inicia el servidor con node index.js y se accede desde el navegador en http://localhost:3000. Es un proyecto sencillo pero útil para entender la autenticación, el cifrado de contraseñas y el manejo de roles en aplicaciones con Node.js.
+
+> > > > > > > 0a6f872c7cc6ea8cd229b605e0b9234ac94c7d59
