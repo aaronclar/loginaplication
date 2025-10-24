@@ -1,35 +1,18 @@
-FROM node:22-bookworm
+# Usamos la imagen oficial de Node.js
+FROM node:20
 
-# Instalar PostgreSQL y dependencias necesarias
-RUN apt-get update && apt-get install -y \
-    bash gosu postgresql postgresql-contrib postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+# Carpeta de trabajo dentro del contenedor
+WORKDIR /usr/src/app
 
-# AÃ±adir PostgreSQL al PATH
-ENV PATH="/usr/lib/postgresql/15/bin:${PATH}"
-
-# Crear directorios necesarios para PostgreSQL
-RUN mkdir -p /run/postgresql /var/lib/postgresql/data \
-    && chown -R postgres:postgres /var/lib/postgresql /run/postgresql
-
-WORKDIR /app
-
-# Copiar dependencias e instalarlas dentro del contenedor
+# Copiamos los archivos de dependencias y los instalamos
 COPY package*.json ./
-RUN npm install husky -g
-RUN npm install --build-from-source
+RUN npm install
 
-
+# Copiamos el resto del código de la aplicación
 COPY . .
 
+# Exponemos el puerto donde corre la app
+EXPOSE 3000
 
-ENV POSTGRES_USER=postgres \
-    POSTGRES_PASSWORD=admin \
-    POSTGRES_DB=monolito \
-    PGDATA=/var/lib/postgresql/data
-
-
-EXPOSE 3000 5432
-
-# CMD
-CMD ["bash", "-c", "gosu postgres bash -c 'initdb -D /var/lib/postgresql/data && pg_ctl -D /var/lib/postgresql/data -o \"-k /run/postgresql\" -w start && psql --command \"CREATE DATABASE ${POSTGRES_DB};\" && node index.js'"]
+# Comando para iniciar la aplicación
+CMD node initdb.js && npm start 
