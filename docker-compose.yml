@@ -1,0 +1,48 @@
+services:
+  app_1:
+    build: .
+    container_name: nombre_app_1
+    networks:
+      - red_1
+    environment:
+      - DB_HOST=nombre_bbdd_1
+    ports:
+      - "1234:3000"
+    depends_on:
+      - bbdd_1
+  bbdd_1:
+    build: ./bbdd/.
+    container_name: nombre_bbdd_1
+    networks:
+      - red_1
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+  app_2:
+    build: .
+    container_name: nombre_app_2
+    networks:
+      - red_2
+    environment:
+      - DB_HOST=nombre_bbdd_2
+    ports:
+      - "1235:3000"
+    depends_on:
+      - bbdd_2
+  bbdd_2: 
+    build: ./bbdd/.
+    container_name: nombre_bbdd_2
+    networks:
+      - red_2
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+
+networks:
+  red_1:
+    driver: bridge
+  red_2:
+    driver: bridge
+  
+volumes:
+  datos_postgres:
+    driver: local
+  
