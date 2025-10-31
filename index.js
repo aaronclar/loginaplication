@@ -113,7 +113,6 @@ app.post('/register', async (req, res) => {
   }
 });
 
-
 app.get('/register', (req, res) => {
   res.render('register');
 });
