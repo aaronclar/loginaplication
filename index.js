@@ -83,6 +83,41 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const exists = await client.query(
+      'SELECT * FROM users WHERE username = $1',
+      [username],
+    );
+    if (exists.rows.length > 0) {
+      console.log('El usuario ya existe');
+      return res.send('El usuario ya existe. <a href="/register">Volver</a>');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await client.query(
+      'INSERT INTO users (username, password, role) VALUES ($1, $2, $3)',
+      [username, hashedPassword, 'user'],
+    );
+
+    console.log('Usuario registrado:', username);
+    res.send(
+      `Usuario ${username} registrado correctamente. <a href="/">Iniciar sesión</a>`,
+    );
+  } catch (err) {
+    console.error('Error registrando usuario:', err);
+    res.send('Error al registrar usuario. <a href="/register">Volver</a>');
+  }
+});
+
+
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
 async function start() {
   try {
     await client.connect();
